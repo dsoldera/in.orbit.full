@@ -1,12 +1,12 @@
+import fastifyCors from '@fastify/cors'
 import fastify from 'fastify'
 import {
   serializerCompiler,
   validatorCompiler,
   type ZodTypeProvider,
 } from 'fastify-type-provider-zod'
-import fastifyCors from '@fastify/cors'
-import { createGoalRoute } from './routes/create-goals'
 import { createCompletionRoute } from './routes/create-completion'
+import { createGoalRoute } from './routes/create-goals'
 import { getPendingGoalsRoute } from './routes/get-pending-goals'
 import { getWeekSummaryRoute } from './routes/get-week-summary'
 
@@ -29,5 +29,5 @@ app.register(getWeekSummaryRoute);
 app.listen({
   port: 3333,
 }).then(() => {
-  console.log('HTTP server running');
+  console.log(`HTTP server running on port 3333`);
 });
