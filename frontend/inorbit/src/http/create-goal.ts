@@ -9,7 +9,7 @@ export async function createGoal({
   title,
   desiredWeeklyFrequency,
 }: CreateGoalRequest) {
-  await fetch(`${backend_url}/goals`, {
+  const result = await fetch(`${backend_url}/goals`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -19,4 +19,6 @@ export async function createGoal({
       desiredWeeklyFrequency,
     }),
   })
+  //console.log('result', result)
+  return result.status
 }

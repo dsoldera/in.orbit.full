@@ -1,16 +1,15 @@
 import { CheckCircle2, Plus } from 'lucide-react'
+import { InOrbitIcon } from './in-orbit-icon'
 import { Button } from './ui/button'
 import { DialogTrigger } from './ui/dialog'
-import { InOrbitIcon } from './in-orbit-icon'
 import { Progress, ProgressIndicator } from './ui/progress-bar'
 import { Separator } from './ui/separator'
-import { OutlineButton } from './ui/outline-button'
 
-import { useQuery } from '@tanstack/react-query';
-import { getSummary } from '../http/get-summary';
-import dayjs from 'dayjs';
-import ptBR from 'dayjs/locale/pt-BR';
-import { PendingGoals } from './pending-goals';
+import { useQuery } from '@tanstack/react-query'
+import dayjs from 'dayjs'
+import ptBR from 'dayjs/locale/pt-BR'
+import { getSummary } from '../http/get-summary'
+import { PendingGoals } from './pending-goals'
 
 dayjs.locale(ptBR);
 
@@ -28,11 +27,11 @@ export function Summary() {
   const firstDayOfWeek = dayjs().startOf('week').format('D MMM')
   const lastDayOfWeek = dayjs().endOf('week').format('D MMM')
 
-  const completedPercentage = Math.round((data.completed * 100) / data.total)
-
+  const completedPercentage = data.completed === 0 ? 0 : Math.round((data.completed * 100) / data.total)
 
   return (
     <div className="py-10 max-w-[480px] px-5 mx-auto flex flex-col gap-6">
+      <h1>Welcome to In.Orbit</h1>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <InOrbitIcon />
@@ -72,7 +71,7 @@ export function Summary() {
       <div className="flex flex-col gap-6">
         <h2 className="text-xl font-medium">Sua semana</h2>
 
-        {Object.entries(data.goalsPerDay).map(([date, goals]) => {
+        {data.goalsPerDay && (Object.entries(data.goalsPerDay).map(([date, goals]) => {
           const weekDay = dayjs(date).format('dddd')
           const formattedDate = dayjs(date).format('D[ de ]MMMM')
           return (
@@ -100,7 +99,7 @@ export function Summary() {
             </ul>
           </div>
           )
-        })}
+        }))}
       </div>
     </div>
   )
